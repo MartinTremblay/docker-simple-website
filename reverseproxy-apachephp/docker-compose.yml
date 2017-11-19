@@ -1,0 +1,26 @@
+version: '2'
+services:
+  proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  website1:
+    build: ../dockerfile/apache-php7.1
+    container_name: website1
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=website1.yoursite.you
+    volumes:
+      - ../website1/:/var/www/html
+
+  website2:
+    build: ../dockerfile/apache-php7.1
+    container_name: website2
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=website2.yoursite.you
+    volumes:
+      - ../website2/:/var/www/html

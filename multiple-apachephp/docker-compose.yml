@@ -1,0 +1,23 @@
+version: '2'
+services:
+  apache-website1:
+    build: ../dockerfile/apache-php7.1
+    container_name: apache-website1
+    restart: unless-stopped
+    ports:
+      - "8001:80"
+    environment:
+      - VIRTUAL_HOST=website1on8001.yoursite.you
+    volumes:
+      - ../website1/:/var/www/html
+
+  apche-website2:
+    build: ../dockerfile/apache-php7.1
+    container_name: apache-website2
+    restart: unless-stopped
+    ports:
+      - "8002:80"
+    environment:
+      - VIRTUAL_HOST=website2on8002.yoursite.you
+    volumes:
+      - ../website2/:/var/www/html

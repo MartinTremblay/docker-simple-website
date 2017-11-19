@@ -1,0 +1,36 @@
+version: '2'
+services:
+  proxy:
+    image: nginx
+    container_name: proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - cache
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+
+  cache:
+    image: million12/varnish
+    container_name: cache
+    environment:
+      VCL_CONFIG: /var/conf/default.vcl
+    links:
+      - cache-website1
+      - cache-website2
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./varnish/conf/default.vcl:/var/conf/default.vcl
+
+  cache-website1:
+    build: ../dockerfile/apache-php7.1
+    container_name: cache-website1
+    volumes:
+      - ../website1/:/var/www/html
+
+  cache-website2:
+    build: ../dockerfile/apache-php7.1
+    container_name: cache-website2
+    volumes:
+      - ../website2/:/var/www/html
