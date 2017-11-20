@@ -75,7 +75,7 @@ http://website2.yoursite.you
 using reverseproxy-cache-apachephp
 
 will used nginx as a reverse-proxy, sending request to a cache varnish, sending missed to multiple apache.
-Some configuration is needed
+Some configuration is needed. Check the nginx conf and varnish conf.
 
 ```
 #on your host file

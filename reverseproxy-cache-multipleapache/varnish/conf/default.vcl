@@ -1,7 +1,5 @@
 vcl 4.0;
 
-
-
 backend cachewebsite1 {
   .host = "cache-website1";
   .port = "80";
@@ -27,9 +25,9 @@ sub vcl_backend_response {
 }
 
 sub vcl_deliver {
-        if (obj.hits > 0) {
-                set resp.http.X-Cache = "HIT";
-        } else {
-                set resp.http.X-Cache = "MISS";
-        }
+    if (obj.hits > 0) {
+            set resp.http.X-Cache = "HIT";
+    } else {
+            set resp.http.X-Cache = "MISS";
+    }
 }
